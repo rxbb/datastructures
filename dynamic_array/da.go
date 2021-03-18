@@ -1,5 +1,7 @@
 package dynamic_array
 
+import "fmt"
+
 type IntArray struct {
 	Arr []int
 	N   int
@@ -17,30 +19,49 @@ func (a *IntArray) IsEmpty() bool{
 	return a.N == 0
 }
 
-func (ia *IntArray) Length() int {
-	return len(ia.Arr)
-	// or ia.N + 1
+func (a *IntArray) Length() int {
+	return a.N
 }
 
-func (ia *IntArray) resize(cp int) {
+func (a *IntArray) resize(cp int) {
 	newArr := make([]int, cp)
-	for i, v := range ia.Arr {
+	for i, v := range a.Arr {
 		newArr[i] = v
 	}
-	ia.Arr = newArr
+	a.Arr = newArr
 }
 
-func (ia *IntArray) Push(item int) {
-	if ia.N == len(ia.Arr) {
-		ia.resize(2 * len(ia.Arr))
+func (a *IntArray) Push(item int) {
+	if a.N == len(a.Arr) {
+		a.resize(2 * len(a.Arr))
 	}
-	ia.Arr[ia.N] = item
-	ia.N++
+	a.Arr[a.N] = item
+	a.N++
 }
 
-func (ia *IntArray) Pop() int {
-	ia.N--
-	item := ia.Arr[ia.N]
-	ia.Arr[ia.N] = 0
+func (a *IntArray) Pop() int {
+	a.N--
+	item := a.Arr[a.N]
+	a.Arr[a.N] = 0
 	return item
+}
+
+func (a *IntArray) RemoveAt(index int) int {
+	data := a.Arr[index]
+	newArr := make([]int,a.N - 1)
+	i := 0
+	j := 0
+	fmt.Println(a.N)
+	for i < a.N {
+		if i == index{
+			j--
+		}else{
+			newArr[j] = a.Arr[i]
+		}
+		i++
+		j++
+	}
+	a.Arr = newArr
+	a.N--
+	return data
 }
