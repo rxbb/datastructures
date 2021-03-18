@@ -1,3 +1,3 @@
-module github.com/rxbb/datastructuresingo
+module github.com/rxbb/datastructures
 
 go 1.16
