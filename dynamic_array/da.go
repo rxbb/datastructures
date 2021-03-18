@@ -12,6 +12,11 @@ func NewIntArray() *IntArray {
 	return intArr
 }
 
+
+func (a *IntArray) IsEmpty() bool{
+	return a.N == 0
+}
+
 func (ia *IntArray) Length() int {
 	return len(ia.Arr)
 	// or ia.N + 1
