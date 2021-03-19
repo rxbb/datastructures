@@ -159,3 +159,16 @@ func (dll *DoublyLinkedList) RemoveAt(index int) interface{}{
 	}
 	return dll.Remove(trav)
 }
+
+func (dll *DoublyLinkedList) Iterator() (func()bool, func()interface{}){
+	trav := dll.Head
+	hasNext := func()bool{
+		return trav!=nil
+	}
+	next := func()interface{}{
+		data := trav.Data
+		trav = trav.Next
+		return data
+	}
+	return hasNext,next
+}

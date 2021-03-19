@@ -1,6 +1,7 @@
 package linkedlist
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -27,5 +28,18 @@ func TestLinkedList(t *testing.T){
 	list.RemoveAt(1)
 	if list.Head.Data != list.Tail.Data {
 		t.Errorf("tail and head data must be equal after removing all nodes but one --> %s",list.Tail.Data)
+	}
+}
+
+
+func TestIterator(t *testing.T){
+	list := NewDLL()
+	list.AddLast("first item")
+	list.AddLast("second item")
+	list.AddLast("third item")
+	list.AddLast("fourth item")
+	hasNext , next:= list.Iterator()
+	for hasNext() {
+		fmt.Println(next())
 	}
 }
