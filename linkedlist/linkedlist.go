@@ -115,4 +115,47 @@ func (dll *DoublyLinkedList) RemoveLast() interface{}{
 	return data
 }
 
+func (dll *DoublyLinkedList) Remove(node *Node) interface{}{
+	if node.Prev == nil{
+		return dll.RemoveFirst()
+	}
+	if node.Next == nil{
+		return dll.RemoveLast()
+	}
 
+	node.Next.Prev =  node.Prev
+	node.Prev.Next = node.Next
+	// Get node data to return it
+	data := node.Data
+	// deallocate the memory
+	node.Data = nil
+	node.Next = nil
+	node.Prev = nil
+	dll.Size--
+	return data
+}
+
+
+func (dll *DoublyLinkedList) RemoveAt(index int) interface{}{
+	if index < 0 || index >= dll.Size {
+		log.Fatal("Illegal index")
+	}
+	var i int
+	var trav *Node
+	if index < dll.Size / 2 {
+		i = 0
+		trav = dll.Head
+		for i!= index{
+			trav = trav.Next
+			i++
+		}
+	}else{
+		i = dll.Size - 1
+		trav = dll.Tail
+		for i!=index{
+			trav = trav.Prev
+			i--
+		}
+	}
+	return dll.Remove(trav)
+}
