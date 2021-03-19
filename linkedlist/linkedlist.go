@@ -1,6 +1,9 @@
 package linkedlist
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 type Node struct{
 	Data interface{}

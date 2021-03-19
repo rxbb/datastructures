@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+
 func TestLinkedList(t *testing.T){
 	list := NewDLL()
 	list.AddLast("first item")
