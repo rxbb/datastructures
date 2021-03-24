@@ -1,23 +1,22 @@
 package linkedlist
 
 import (
-	"fmt"
 	"log"
 )
 
-type Node struct{
+type Node struct {
 	Data interface{}
 	Next *Node
 	Prev *Node
 }
 
-type DoublyLinkedList struct{
+type DoublyLinkedList struct {
 	Head *Node
 	Tail *Node
 	Size int
 }
 
-func NewNode(data interface{},next *Node,prev *Node) *Node{
+func NewNode(data interface{}, next *Node, prev *Node) *Node {
 	n := new(Node)
 	n.Next = next
 	n.Prev = prev
@@ -25,7 +24,7 @@ func NewNode(data interface{},next *Node,prev *Node) *Node{
 	return n
 }
 
-func NewDLL() *DoublyLinkedList{
+func NewDLL() *DoublyLinkedList {
 	dll := new(DoublyLinkedList)
 	dll.Head = nil
 	dll.Tail = nil
@@ -33,14 +32,13 @@ func NewDLL() *DoublyLinkedList{
 	return dll
 }
 
-
-func (dll *DoublyLinkedList) IsEmpty() bool{
+func (dll *DoublyLinkedList) IsEmpty() bool {
 	return dll.Size == 0
 }
 
 func (dll *DoublyLinkedList) Clear() {
 	trav := dll.Head
-	for trav!=nil{
+	for trav != nil {
 		next := trav.Next
 		trav.Prev = nil
 		trav.Next = nil
@@ -54,79 +52,79 @@ func (dll *DoublyLinkedList) Clear() {
 
 func (dll *DoublyLinkedList) AddLast(data interface{}) {
 	if dll.IsEmpty() {
-		dll.Head = NewNode(data,nil,nil)
+		dll.Head = NewNode(data, nil, nil)
 		dll.Tail = dll.Head
-	}else{
-		dll.Tail.Next = NewNode(data,nil,dll.Tail)
+	} else {
+		dll.Tail.Next = NewNode(data, nil, dll.Tail)
 		dll.Tail = dll.Tail.Next
 	}
 	dll.Size++
 }
 
-func (dll *DoublyLinkedList) AddFirst(data interface{}){
+func (dll *DoublyLinkedList) AddFirst(data interface{}) {
 	if dll.IsEmpty() {
-		dll.Head = NewNode(data,nil,nil)
+		dll.Head = NewNode(data, nil, nil)
 		dll.Tail = dll.Head
-	}else{
-		dll.Head.Prev = NewNode(data,dll.Head,nil)
+	} else {
+		dll.Head.Prev = NewNode(data, dll.Head, nil)
 		dll.Head = dll.Head.Prev
 	}
 	dll.Size++
 }
 
-func (dll *DoublyLinkedList) PeekLast() interface{}{
+func (dll *DoublyLinkedList) PeekLast() interface{} {
 	if dll.IsEmpty() {
 		log.Fatal("List is Empty")
 	}
 	return dll.Tail.Data
 }
 
-func (dll *DoublyLinkedList) PeekFirst() interface{}{
+func (dll *DoublyLinkedList) PeekFirst() interface{} {
 	if dll.IsEmpty() {
 		log.Fatal("List is Empty")
 	}
 	return dll.Head.Data
 }
 
-func (dll *DoublyLinkedList) RemoveFirst() interface{}{
+func (dll *DoublyLinkedList) RemoveFirst() interface{} {
 	if dll.IsEmpty() {
 		log.Fatal("List is Empty")
 	}
 	data := dll.Head.Data
 	dll.Head = dll.Head.Next
 	dll.Size--
-	if dll.IsEmpty(){
+	if dll.IsEmpty() {
 		dll.Tail = nil
-	}else{
+	} else {
 		dll.Head.Prev = nil
 	}
 	return data
 }
 
-func (dll *DoublyLinkedList) RemoveLast() interface{}{
+func (dll *DoublyLinkedList) RemoveLast() interface{} {
 	if dll.IsEmpty() {
 		log.Fatal("List is Empty")
 	}
 	data := dll.Tail.Data
 	dll.Tail = dll.Tail.Prev
 	dll.Size--
-	if dll.IsEmpty(){
+	if dll.IsEmpty() {
 		dll.Head = nil
-	}else{
+	} else {
 		dll.Tail.Next = nil
 	}
 	return data
 }
 
-func (dll *DoublyLinkedList) Remove(node *Node) interface{}{
-	if node.Prev == nil{
+func (dll *DoublyLinkedList) Remove(node *Node) interface{} {
+	if node.Prev == nil {
 		return dll.RemoveFirst()
 	}
-	if node.Next == nil{
+	if node.Next == nil {
 		return dll.RemoveLast()
 	}
 
-	node.Next.Prev =  node.Prev
+	node.Next.Prev = node.Prev
 	node.Prev.Next = node.Next
 	// Get node data to return it
 	data := node.Data
@@ -138,24 +136,23 @@ func (dll *DoublyLinkedList) Remove(node *Node) interface{}{
 	return data
 }
 
-
-func (dll *DoublyLinkedList) RemoveAt(index int) interface{}{
+func (dll *DoublyLinkedList) RemoveAt(index int) interface{} {
 	if index < 0 || index >= dll.Size {
 		log.Fatal("Illegal index")
 	}
 	var i int
 	var trav *Node
-	if index < dll.Size / 2 {
+	if index < dll.Size/2 {
 		i = 0
 		trav = dll.Head
-		for i!= index{
+		for i != index {
 			trav = trav.Next
 			i++
 		}
-	}else{
+	} else {
 		i = dll.Size - 1
 		trav = dll.Tail
-		for i!=index{
+		for i != index {
 			trav = trav.Prev
 			i--
 		}
@@ -163,15 +160,15 @@ func (dll *DoublyLinkedList) RemoveAt(index int) interface{}{
 	return dll.Remove(trav)
 }
 
-func (dll *DoublyLinkedList) Iterator() (func()bool, func()interface{}){
+func (dll *DoublyLinkedList) Iterator() (func() bool, func() interface{}) {
 	trav := dll.Head
-	hasNext := func()bool{
-		return trav!=nil
+	hasNext := func() bool {
+		return trav != nil
 	}
-	next := func()interface{}{
+	next := func() interface{} {
 		data := trav.Data
 		trav = trav.Next
 		return data
 	}
-	return hasNext,next
+	return hasNext, next
 }
