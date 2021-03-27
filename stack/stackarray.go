@@ -4,17 +4,17 @@ import (
 	"github.com/rxbb/datastructures/dynamicarray"
 )
 
-type StackArr struct{
-	List *dynamicarray.IntArray
+type StackArr struct {
+	List *dynamicarray.Array
 }
 
-func NewStackArr() *StackArr{
+func NewStackArr() *StackArr {
 	stack := new(StackArr)
-	stack.List = dynamicarray.NewIntArray()
+	stack.List = dynamicarray.NewArray()
 	return stack
 }
 
-func (stack *StackArr) Size() int{
+func (stack *StackArr) Size() int {
 	return stack.List.Length()
 }
 
@@ -22,8 +22,6 @@ func (stack *StackArr) Push(item int) {
 	stack.List.Push(item)
 }
 
-func (stack *StackArr) Pop() int{
+func (stack *StackArr) Pop() interface{} {
 	return stack.List.Pop()
 }
-
-

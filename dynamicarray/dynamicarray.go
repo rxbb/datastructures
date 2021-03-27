@@ -2,36 +2,36 @@ package dynamicarray
 
 import "fmt"
 
-type IntArray struct {
-	Arr []int
+type Array struct {
+	Arr []interface{}
 	N   int
 }
 
-func NewIntArray() *IntArray {
-	intArr := new(IntArray)
-	intArr.Arr = make([]int, 1)
+func NewArray() *Array {
+	intArr := new(Array)
+	intArr.Arr = make([]interface{}, 1)
 	intArr.N = 0
 	return intArr
 }
 
 
-func (a *IntArray) IsEmpty() bool{
+func (a *Array) IsEmpty() bool{
 	return a.N == 0
 }
 
-func (a *IntArray) Length() int {
+func (a *Array) Length() int {
 	return a.N
 }
 
-func (a *IntArray) resize(cp int) {
-	newArr := make([]int, cp)
+func (a *Array) resize(cp int) {
+	newArr := make([]interface{}, cp)
 	for i, v := range a.Arr {
 		newArr[i] = v
 	}
 	a.Arr = newArr
 }
 
-func (a *IntArray) Push(item int) {
+func (a *Array) Push(item interface{}) {
 	if a.N == len(a.Arr) {
 		a.resize(2 * len(a.Arr))
 	}
@@ -39,16 +39,16 @@ func (a *IntArray) Push(item int) {
 	a.N++
 }
 
-func (a *IntArray) Pop() int {
+func (a *Array) Pop() interface{} {
 	a.N--
 	item := a.Arr[a.N]
 	a.Arr[a.N] = 0
 	return item
 }
 
-func (a *IntArray) RemoveAt(index int) int {
+func (a *Array) RemoveAt(index int) interface{} {
 	data := a.Arr[index]
-	newArr := make([]int,a.N - 1)
+	newArr := make([]interface{},a.N - 1)
 	i := 0
 	j := 0
 	fmt.Println(a.N)
