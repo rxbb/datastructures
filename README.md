@@ -3,4 +3,5 @@
 1. Dynamic Arrays
 2. Linked List
 3. Stack
+4. Queue
 
